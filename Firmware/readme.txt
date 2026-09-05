@@ -9,18 +9,18 @@ bytes 85..109  = ADS1299 sample 4
 0                           12
 
 13
-├── EMG sample 1, CH1..CH8 ──┤
-13                          36
+├── CH1..CH8 ──┤
+13               36
 
 37
-├── EMG sample 2, CH1..CH8 ──┤
-37                          60
+├── CH1..CH8 ──┤
+37             60
 
 61
-├── EMG sample 3, CH1..CH8 ──┤
-61                          84
+├──  CH1..CH8 ──┤
+61              84
 
 
 61
-├── EMG sample 4, CH1..CH8 ──┤
-85                          109
+├──  CH1..CH8 ──┤
+85             109
