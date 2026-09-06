@@ -2,6 +2,8 @@
 Movement and Muscle in VR/XR 
 
 ![Aura VR demo](https://github.com/pieeg-club/Aura_VR/raw/main/images/aura_gif.gif)
+<img src="https://github.com/pieeg-club/Aura_VR/raw/main/images/aura_gif.gif" alt="Aura VR demo" width="400">
+
 
 # PiEEG XR — IronBCI
 
