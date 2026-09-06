@@ -8,6 +8,12 @@ Movement and Muscle in VR/XR
 
 **Wearable brain–computer interface (BCI) and EMG/IMU motion capture for VR and VRChat.**
 
+<p align="center">
+  <a href="https://youtu.be/KI8ROgohrF4">
+    <img src="https://img.youtube.com/vi/KI8ROgohrF4/maxresdefault.jpg" alt="Watch the demo on YouTube" width="70%">
+  </a>
+</p>
+
 PiEEG XR is an open hardware + firmware + SDK platform built around the
 **STM32WB55** wireless MCU and **Texas Instruments ADS1299** 24-bit biosignal
 front‑ends. It streams **muscle activity (EMG)** and **motion (accelerometer +
