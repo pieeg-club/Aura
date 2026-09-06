@@ -4,7 +4,7 @@ Movement and Muscle in VR/XR
 <img src="https://github.com/pieeg-club/Aura_VR/raw/main/images/aura_gif.gif" alt="Aura VR demo" width="400">
 
 
-# PiEEG XR — IronBCI
+# Aura VR — IronBCI
 
 **Wearable brain–computer interface (BCI) and EMG/IMU motion capture for VR and VRChat.**
 
@@ -14,7 +14,7 @@ Movement and Muscle in VR/XR
   </a>
 </p>
 
-PiEEG XR is an open hardware + firmware + SDK platform built around the
+Aura VR is an open hardware + firmware + SDK platform built around the
 **STM32WB55** wireless MCU and **Texas Instruments ADS1299** 24-bit biosignal
 front‑ends. It streams **muscle activity (EMG)** and **motion (accelerometer +
 gyroscope)** over Bluetooth Low Energy, so a person's real arm and leg movement
@@ -51,8 +51,7 @@ Two board families share the same firmware base and BLE protocol:
 
 | Board | MCU | Analog front‑end | Channels | Motion | Best for |
 |-------|-----|------------------|----------|--------|----------|
-| **PiEEG_XR** | STM32WB55 | 1× ADS1299 | 8 EMG/EEG | LSM6DS3 IMU (accel + gyro) | VR / VRChat, EMG + motion |
-| **IronBCI‑16** | STM32WB55 | 2× ADS1299 | 16 EMG/EEG | — | High‑channel EEG/EMG recording |
+| **Aura VR** | STM32WB55 | 1× ADS1299 | 8 EMG/EEG | LSM6DS3 IMU (accel + gyro) | VR / VRChat, EMG + motion |
 
 Additional sensors present on the design: **MAX30102** (optical PPG / heart‑rate,
 optional).
@@ -74,7 +73,7 @@ board folders (`ironbci_16/`, `EMG_VR/`).
 
 ## BLE protocol
 
-**Advertised name:** `PiEEG_XR` (16‑ch firmware advertises `IRONBCI_16`)
+**Advertised name:** `Aura VR` 
 
 | Role | UUID |
 |------|------|
@@ -84,7 +83,7 @@ board folders (`ironbci_16/`, `EMG_VR/`).
 
 Streaming starts automatically when the host subscribes to notifications.
 
-### PiEEG_XR packet — 109 bytes (EMG + IMU)
+### Aura VR packet — 109 bytes (EMG + IMU)
 
 ```
 byte  0        IMU status
@@ -96,12 +95,6 @@ bytes 61..84   EMG sample 3   CH1..CH8
 bytes 85..108  EMG sample 4   CH1..CH8
 ```
 
-### IronBCI‑16 packet — 96 bytes (16 EMG/EEG channels)
-
-```
-sample 0: CH1..CH16   (48 bytes, 3 bytes each, MSB first)
-sample 1: CH1..CH16   (48 bytes)
-```
 
 EMG/EEG channels are big‑endian signed 24‑bit. Convert one channel to
 microvolts:
@@ -121,9 +114,9 @@ IMU axes are int16 little‑endian; scale by the configured full‑scale ranges
 ## Repository layout
 
 ```
-EMG_VR/                         PiEEG_XR (EMG + IMU) — the VR path
+EMG_VR/                         Aura VR (EMG + IMU) — the VR path
 ├── Framework/                  STM32 firmware sources (p2p_server*.c)
-├── project/EMG_VR.rar          Full STM32CubeIDE project (PiEEG_XR_test)
+├── project/EMG_VR.rar          Full STM32CubeIDE project (Aura VR)
 └── SDK/                        Python host software
     ├── 1_Visualisation_Graph.py   Live accelerometer + gyroscope plot
     ├── 2_body_rotation.py         3D object follows physical IMU rotation
@@ -133,13 +126,7 @@ EMG_VR/                         PiEEG_XR (EMG + IMU) — the VR path
     ├── 5.Palm_EMG.py              Hand / palm model driven by EMG (hand_fast.obj)
     └── hand_fast.obj              3D hand mesh
 
-ironbci_16/                     IronBCI‑16 (16‑channel) board + firmware
-├── SDK/
-│   ├── 1.Python.py             16‑ch SDK + matplotlib plotter (IronBCI16 class)
-│   └── 2.Python.py             16‑ch fast plotter (pyqtgraph, low latency)
-├── 2.Final/                    Final firmware sources + ironbci_16_1.hex
-├── MCU/ , Schematic/ , BOM/    Hardware design files
-└── service/                    Firmware iterations, GUIs, pin/config notes
+
 ```
 
 ---
@@ -158,7 +145,7 @@ python -m pip install pyqtgraph PyQt5
 
 ### 2. Power the board and start streaming
 
-Power the board; it advertises as `PiEEG_XR` (or `IRONBCI_16`). No pairing PIN is
+Power the board; it advertises as `Aura VR`. No pairing PIN is
 required — the host just subscribes to the notify characteristic.
 
 ### 3. Run a visualizer
