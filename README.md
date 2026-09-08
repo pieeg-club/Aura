@@ -4,7 +4,7 @@ Movement and Muscle in VR/XR
 <img src="https://github.com/pieeg-club/Aura_VR/raw/main/images/aura_gif.gif" alt="Aura VR demo" width="400">
 
 
-# Aura VR — IronBCI
+# Aura VR
 
 **Wearable brain–computer interface (BCI) and EMG/IMU motion capture for VR and VRChat.**
 
