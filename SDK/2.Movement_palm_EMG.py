@@ -3,14 +3,12 @@
 
 """
 PiEEG_XR
-109-byte BLE packet
+61-byte BLE packet
 
 Packet:
     0..12    IMU
     13..36   ADS1299 sample 1
     37..60   ADS1299 sample 2
-    61..84   ADS1299 sample 3
-    85..108  ADS1299 sample 4
 
 Display:
     LEFT  = 3D IMU orientation
@@ -49,7 +47,7 @@ DEVICE_NAME = "PiEEG_XR"
 
 NOTIFY_UUID = "0000fe42-8e22-4541-9d4c-21edae82ed19"
 
-PACKET_SIZE = 109
+PACKET_SIZE = 61
 
 
 # ============================================================
@@ -158,14 +156,14 @@ ADS_BYTES_PER_CHANNEL = 3
 
 ADS_SAMPLE_SIZE = 24
 
-ADS_SAMPLES_PER_PACKET = 4
+ADS_SAMPLES_PER_PACKET = 2
 
 ADS_PAYLOAD_SIZE = (
     ADS_SAMPLE_SIZE *
     ADS_SAMPLES_PER_PACKET
 )
 
-# 13 + 96 = 109
+# 13 + 48 = 61
 
 assert ADS_START + ADS_PAYLOAD_SIZE == PACKET_SIZE
 
@@ -402,14 +400,14 @@ def decode_ads1299(packet):
 
         return
 
-    # Exactly bytes 13..108
+    # Exactly bytes 13..60
 
     ads = packet[
         ADS_START:
         PACKET_SIZE
     ]
 
-    if len(ads) != 96:
+    if len(ads) != ADS_PAYLOAD_SIZE:
 
         return
 
@@ -1027,7 +1025,7 @@ def process_packet(packet):
         return
 
     # If BLE somehow gives more data, only process
-    # first 109 bytes.
+    # first 61 bytes.
 
     packet = packet[:PACKET_SIZE]
 
@@ -2177,7 +2175,7 @@ def main():
         fig.suptitle(
 
             "PiEEG_XR - "
-            "109-byte BLE - "
+            "61-byte BLE - "
             "3D IMU + "
             "8 Channel ADS1299 EMG (µV)\n"
 
