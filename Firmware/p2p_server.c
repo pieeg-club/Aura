@@ -24,7 +24,7 @@ extern I2C_HandleTypeDef hi2c1;
 #define CFG_TASK_BLE_CONNECTED_ID 0x01
 
 
-uint8_t local[120];
+uint8_t local[61];  //120
 
 uint8_t PPG_sensor_3_bytes [3];
 uint8_t PPG_sensor_3_bytes_send_data [3];
@@ -296,7 +296,7 @@ static void ads1299_init(void)
     write_byte(CH5SET, 0x00);
     write_byte(CH6SET, 0x00);
     write_byte(CH7SET, 0x00);
-    write_byte(CH8SET, 0x01);
+    write_byte(CH8SET, 0x00);
 
     send_command(RDATAC);                        /* continuous read mode    */
     send_command(START);                         /* start conversions       */
@@ -314,46 +314,28 @@ static void ads1299_init(void)
 
 
 
-void LSM6DS3()
-									  {
+void LSM6DS3(void)
+{
+    uint8_t tmp[12];   /* 0x22..0x2D = gyro[6] then accel[6] */
+    HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_X1_gyroscope,
+                     I2C_MEMADD_SIZE_8BIT, tmp, 12, 2);
 
-										//    HAL_I2C_Mem_Read(&hi2c1, adress_read, LISR,1, (uint8_t*)&test_acceler, 1, 1000);
-										//    HAL_I2C_Mem_Read(&hi2c1, adress_read, status, 1, (uint8_t*)&status_readed, 1, 1000);
-
-							//			if (status_readed == data_was_ready)
-							//		  {
-
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_X1, 1, (int8_t*)&OUT_X1_data, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_X2, 1, (int8_t*)&OUT_X2_data, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Y1, 1, (uint8_t*)&OUT_Y1_data, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Y2, 1, (uint8_t*)&OUT_Y2_data, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Z1, 1, (uint8_t*)&OUT_Z1_data, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Z2, 1, (uint8_t*)&OUT_Z2_data, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_X1_gyroscope, 1, (int8_t*)&OUT_X1_data_gyroscope, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_X2_gyroscope, 1, (int8_t*)&OUT_X2_data_gyroscope, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Y1_gyroscope, 1, (uint8_t*)&OUT_Y1_data_gyroscope, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Y2_gyroscope, 1, (uint8_t*)&OUT_Y2_data_gyroscope, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Z1_gyroscope, 1, (uint8_t*)&OUT_Z1_data_gyroscope, 1, 1);
-											HAL_I2C_Mem_Read(&hi2c1, adress_read, OUT_Z2_gyroscope, 1, (uint8_t*)&OUT_Z2_data_gyroscope, 1, 1);
-
-											local[0] = 0; //status_readed;
-											local[1] = OUT_X1_data;
-											local[2] = OUT_X2_data;
-											local[3] = OUT_Y1_data;
-											local[4] = OUT_Y2_data;
-											local[5] = OUT_Z1_data;
-											local[6] = OUT_Z2_data;
-											local[7] = OUT_X1_data_gyroscope;
-											local[8] = OUT_X2_data_gyroscope;
-											local[9] = OUT_Y1_data_gyroscope;
-											local[10] = OUT_Y2_data_gyroscope;
-											local[11] = OUT_Z1_data_gyroscope;
-											local[12] = OUT_Z2_data_gyroscope;
-
-											//P2PS_STM_App_Update_Char(P2P_NOTIFY_CHAR_UUID, (uint8_t *) (&local));
-
-								//	}
-								  }
+    local[0]  = 0;
+    /* accel first, to keep your existing packet byte order */
+    local[1]  = tmp[6];   /* OUT_X1 accel (0x28) */
+    local[2]  = tmp[7];
+    local[3]  = tmp[8];
+    local[4]  = tmp[9];
+    local[5]  = tmp[10];
+    local[6]  = tmp[11];  /* OUT_Z2 accel (0x2D) */
+    /* gyro */
+    local[7]  = tmp[0];   /* OUT_X1 gyro (0x22) */
+    local[8]  = tmp[1];
+    local[9]  = tmp[2];
+    local[10] = tmp[3];
+    local[11] = tmp[4];
+    local[12] = tmp[5];   /* OUT_Z2 gyro (0x27) */
+}
 
 
 
@@ -391,7 +373,7 @@ static void ads1299_read_frame(void)
                 for (int b = 0; b < 3; b++)
                 {
                     local[count++] = ch[b];
-                    if (count == 109)
+                    if (count == 61)//109
 
                     {
                         count = 13;
