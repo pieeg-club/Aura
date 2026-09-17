@@ -1,5 +1,6 @@
 # Aura_VR
 Movement and Muscle in VR/XR 
+Soon available on the market; details are [here](https://aura.pieeg.com/) 
 
 <img src="https://github.com/pieeg-club/Aura_VR/raw/main/images/aura_gif.gif" alt="Aura VR demo" width="400">
 
