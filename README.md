@@ -7,7 +7,8 @@ Soon available on the market; details are [here](https://aura.pieeg.com/)
 
 # Aura VR
 
-**Wearable brain–computer interface (BCI) and EMG/IMU motion capture for VR and VRChat.**
+**Wearable brain–computer interface (BCI) and EMG/IMU motion capture for VR and VRChat.** 
+See YouTube [video](https://youtu.be/KI8ROgohrF4)
 
 <p align="center">
   <a href="https://youtu.be/KI8ROgohrF4">
