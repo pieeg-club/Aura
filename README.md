@@ -1,4 +1,4 @@
-# Aura_VR
+# Aura
 Movement and Muscle in VR/XR 
 Soon available on the market; details are [here](https://aura.pieeg.com/) 
 
